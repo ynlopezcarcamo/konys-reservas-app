@@ -36,3 +36,13 @@ export async function crearReserva(reserva) {
   if (error) throw error;
   return data;
 }
+export async function obtenerPlatos() {
+  const { data, error } = await supabase
+    .from('platos')
+    .select('*')
+    .eq('disponible', true)
+    .order('categoria')
+    .order('nombre');
+  if (error) throw error;
+  return data;
+}
