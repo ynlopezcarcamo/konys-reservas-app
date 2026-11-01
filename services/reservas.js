@@ -46,3 +46,19 @@ export async function obtenerPlatos() {
   if (error) throw error;
   return data;
 }
+export async function obtenerTodasLasMesas() {
+  const { data, error } = await supabase
+    .from('mesas')
+    .select('*')
+    .order('nombre');
+  if (error) throw error;
+  return data;
+}
+
+export async function cambiarEstadoMesa(mesaId, activa) {
+  const { error } = await supabase
+    .from('mesas')
+    .update({ activa })
+    .eq('id', mesaId);
+  if (error) throw error;
+}
