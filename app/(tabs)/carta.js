@@ -30,12 +30,12 @@ export default function CartaScreen() {
   const [error, setError] = useState(null);
   const [categoria, setCategoria] = useState('todas');
 
-  useEffect(() => {
-    obtenerPlatos()
-      .then(setPlatos)
-      .catch(() => setError('No pudimos cargar la carta. Revisa tu conexión.'))
-      .finally(() => setCargando(false));
-  }, []);
+useEffect(() => {
+  obtenerPlatos()
+    .then(setPlatos)
+    .catch(() => setError('No pudimos cargar la carta. Revisa tu conexión.'))
+    .finally(() => setCargando(false));
+}, []);
 
   const filtrados =
     categoria === 'todas'
