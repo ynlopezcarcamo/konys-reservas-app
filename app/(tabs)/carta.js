@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -30,12 +31,12 @@ export default function CartaScreen() {
   const [error, setError] = useState(null);
   const [categoria, setCategoria] = useState('todas');
 
-useEffect(() => {
-  obtenerPlatos()
-    .then(setPlatos)
-    .catch(() => setError('No pudimos cargar la carta. Revisa tu conexión.'))
-    .finally(() => setCargando(false));
-}, []);
+  useEffect(() => {
+    obtenerPlatos()
+      .then(setPlatos)
+      .catch(() => setError('No pudimos cargar la carta. Revisa tu conexión.'))
+      .finally(() => setCargando(false));
+  }, []);
 
   const filtrados =
     categoria === 'todas'
@@ -92,10 +93,23 @@ useEffect(() => {
         }
         renderItem={({ item }) => (
           <View style={styles.plato}>
+            {item.foto_url ? (
+              <Image
+                source={{ uri: item.foto_url }}
+                style={styles.platoFoto}
+                resizeMode="cover"
+              />
+            ) : (
+              <View style={styles.platoFotoVacia}>
+                <Ionicons name="pizza-outline" size={24} color={colors.textoSuave} />
+              </View>
+            )}
             <View style={styles.platoInfo}>
               <Text style={styles.platoNombre}>{item.nombre}</Text>
               {item.descripcion ? (
-                <Text style={styles.platoDescripcion}>{item.descripcion}</Text>
+                <Text style={styles.platoDescripcion} numberOfLines={2}>
+                  {item.descripcion}
+                </Text>
               ) : null}
             </View>
             <Text style={styles.platoPrecio}>{formatearPrecio(item.precio)}</Text>
@@ -138,24 +152,33 @@ const styles = StyleSheet.create({
   lista: { paddingHorizontal: 20, paddingBottom: 32, paddingTop: 8 },
   plato: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: colors.fondoSuave,
     borderRadius: 12,
-    padding: 16,
+    padding: 12,
     marginBottom: 10,
     gap: 12,
+  },
+  platoFoto: { width: 64, height: 64, borderRadius: 10 },
+  platoFotoVacia: {
+    width: 64,
+    height: 64,
+    borderRadius: 10,
+    backgroundColor: colors.fondo,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   platoInfo: { flex: 1 },
   platoNombre: { fontSize: 15, fontWeight: '600', color: colors.primario },
   platoDescripcion: {
-    fontSize: 13,
+    fontSize: 12,
     color: colors.textoSuave,
-    marginTop: 4,
-    lineHeight: 18,
+    marginTop: 3,
+    lineHeight: 16,
   },
   platoPrecio: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '700',
     color: colors.acento,
   },
