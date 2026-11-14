@@ -82,6 +82,24 @@ export async function actualizarHorario(id, cambios) {
   if (error) throw error;
 }
 
+export async function crearMesa(mesa) {
+  const { data, error } = await supabase
+    .from('mesas')
+    .insert(mesa)
+    .select()
+    .single();
+  if (error) throw error;
+  return data;
+}
+
+export async function borrarMesa(mesaId) {
+  const { error } = await supabase
+    .from('mesas')
+    .delete()
+    .eq('id', mesaId);
+  if (error) throw error;
+}
+
 export async function obtenerReservas(filtro = 'todas') {
   let query = supabase
     .from('reservas')

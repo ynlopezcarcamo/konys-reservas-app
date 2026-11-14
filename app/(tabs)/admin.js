@@ -205,6 +205,16 @@ export default function AdminScreen() {
           }
         />
       )}
+
+      {usuario?.rol === 'admin' && (
+        <TouchableOpacity
+          style={styles.botonFlotante}
+          onPress={() => router.push('/admin/nueva-mesa')}
+          activeOpacity={0.85}
+        >
+          <Ionicons name="add" size={28} color={colors.fondo} />
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 }
@@ -274,7 +284,7 @@ const styles = StyleSheet.create({
   subnavActivo: { backgroundColor: colors.primario },
   subnavTexto: { fontSize: 13, color: colors.texto, fontWeight: '500' },
   subnavTextoActivo: { fontSize: 13, color: colors.fondo, fontWeight: '600' },
-  lista: { paddingHorizontal: 20, paddingBottom: 32 },
+  lista: { paddingHorizontal: 20, paddingBottom: 96 },
   tarjeta: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -289,4 +299,16 @@ const styles = StyleSheet.create({
   tarjetaDetalle: { fontSize: 13, color: colors.textoSuave, marginTop: 4 },
   vacio: { alignItems: 'center', paddingVertical: 40 },
   vacioTexto: { fontSize: 14, color: colors.textoSuave, textAlign: 'center', marginTop: 12 },
+  botonFlotante: {
+    position: 'absolute',
+    right: 24,
+    bottom: 24,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: colors.acento,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 4,
+  },
 });
